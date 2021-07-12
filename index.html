@@ -1,49 +1,65 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>画板</title>
     <link rel="stylesheet" href="css/style.css">
-</head>
+  </head>
 
-<body>
+  <body>
     <canvas id="canvas" width="100" height="100"></canvas>
     <script>
-        let canvas = document.getElementById("canvas");
-        canvas.width = document.documentElement.clientWidth
-        canvas.height = document.documentElement.clientHeight
-        let ctx = canvas.getContext("2d");
+      
+      let canvas = document.getElementById("canvas");
+      canvas.width = document.documentElement.clientWidth
+      canvas.height = document.documentElement.clientHeight
+      let ctx = canvas.getContext("2d");
+      ctx.fillStyle = "black";
+      ctx.strokeStyle = 'none';
 
-        let painting = false
+      let painting = false //默认没有作画状态
+      
+      var isTouchDevice = 'ontouchstart' in document.documentElement; //是否是触摸设备(true)      
+      if(isTouchDevice){
+        canvas.ontouchmove = (e) => { //如果触摸了，开始作画
+          let x = e.touches[0].clientX //获取数组touches第一个clientX坐标（横坐标）
+          let y = e.touches[0].clientY //获取数组touches第一个clientY坐标（纵坐标）
+          //画圆
+          ctx.beginPath();
+          ctx.arc(x, y, 10, 0, 2 * Math.PI);
+          ctx.stroke();
+          ctx.fill();
+        }  
+      }else{
+          canvas.onmousedown = () => {
+            painting = true //鼠标点击开始作画状态
+          }
 
-
-        ctx.fillStyle = "black";
-        ctx.strokeStyle = 'none'
-
-        canvas.onmousedown = () => {
-            painting = true
-        }
-
-        canvas.onmousemove = (e) => {
+          canvas.onmousemove = (x) => {//鼠标移动了开始作画
             if (painting === true) {
-                ctx.beginPath();
-                ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
-                ctx.stroke();
-                ctx.fill();
+              //画圆
+              ctx.beginPath();
+              ctx.arc(x.clientX, x.clientY, 10, 0, 2 * Math.PI);
+              ctx.stroke();
+              ctx.fill();
             } else {
-                console.log('什么都不做')
-            }
-        }
+             //console.log('什么都不做')
+            }   
+          } 
 
-        canvas.onmouseup = () => {
+          canvas.onmouseup = () => {
             painting = false
-        }
-
-
+          } 
+  
+        
+      }
+      
+         
     </script>
-</body>
+  
+  </body>
 
 </html>

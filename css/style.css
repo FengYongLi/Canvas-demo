@@ -5,6 +5,9 @@ body{overflow: hidden;}
 
 #canvas{
   display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 .actions{
   position: fixed;
@@ -25,7 +28,7 @@ body{overflow: hidden;}
 }
 .colors{
   position: fixed;
-  top: 80px;
+  top: 60px;
   left: 28px;
 }
 .colors > li {
@@ -46,7 +49,7 @@ body{overflow: hidden;}
 .size{
   position: fixed;
   right: 20px;
-  top: 80px;
+  top: 20px;
 }
 .size > li{margin: 20px 0;}
 .size > .thin{

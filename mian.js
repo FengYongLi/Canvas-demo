@@ -1,7 +1,7 @@
-// 阻止默认动作
-document.addEventListener('touchmove', function (e) {
-  e.preventDefault()
-})
+// 阻止默认动作 消除画画屏幕滚动 手机端下载按钮无效  CSS 相对屏幕固定解决
+// document.addEventListener('touchmove', function (e) {
+//   e.preventDefault()
+// })
 
 const canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");

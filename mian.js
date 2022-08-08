@@ -33,6 +33,15 @@ clear.onclick = function(){
     clear.classList.remove('active')
   },1000)
 }
+download.onclick = function(){
+  const url = canvas.toDataURL("image/png")
+  const a = document.createElement('a')
+  document.body.appendChild(a)
+  a.href = url
+  a.download = "我的画"
+  a.target = '_blank'
+  a.click()
+}
 
 black.onclick = function(){
   ctx.fillStyle = "black";

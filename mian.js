@@ -4,9 +4,11 @@ document.addEventListener('touchmove', function (e) {
 })
 
 const canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
+let lineWidth = 5
+ctx.lineCap = "round";
 
 autoSetCanvasSize(canvas)
-
 touchAndMousePainting(canvas)
 
 let eraserEnabled = false
@@ -14,14 +16,63 @@ pen.onclick = function(){
   eraserEnabled = false
   pen.classList.add('active')
   eraser.classList.remove('active')
+  clear.classList.remove('active')
 }
 eraser.onclick = function(){
   eraserEnabled = true
   eraser.classList.add('active')
   pen.classList.remove('active')
+  clear.classList.remove('active')
+}
+clear.onclick = function(){
+  ctx.clearRect(0, 0,  canvas.width, canvas.height)
+  clear.classList.add('active')
+  pen.classList.remove('active')
+  eraser.classList.remove('active')
+  setTimeout(() => {
+    clear.classList.remove('active')
+  },1000)
 }
 
+black.onclick = function(){
+  ctx.fillStyle = "black";
+  ctx.strokeStyle = 'black';
+  black.classList.add('active')
+  red.classList.remove('active')
+  green.classList.remove('active')
+  blue.classList.remove('active')
+}
+red.onclick = function(){
+  ctx.fillStyle = "red";
+  ctx.strokeStyle = 'red';
+  red.classList.add('active')
+  black.classList.remove('active')
+  green.classList.remove('active')
+  blue.classList.remove('active')
+}
+green.onclick = function(){
+  ctx.fillStyle = "green";
+  ctx.strokeStyle = 'green';
+  green.classList.add('active')
+  black.classList.remove('active')
+  red.classList.remove('active')
+  blue.classList.remove('active')
+}
+blue.onclick = function(){
+  ctx.fillStyle = "blue";
+  ctx.strokeStyle = 'blue';
+  blue.classList.add('active')
+  black.classList.remove('active')
+  red.classList.remove('active')
+  green.classList.remove('active')
+}
 
+thin.onclick = function(){
+  lineWidth = 5
+}
+thick.onclick = function(){
+  lineWidth = 10
+}
 
 // 自动设置 canvas 宽高
 function autoSetCanvasSize(canvas){
@@ -37,10 +88,6 @@ function autoSetCanvasSize(canvas){
 }
 // 鼠标或触屏绘画
 function touchAndMousePainting(canvas){
-  let ctx = canvas.getContext("2d");
-  ctx.lineWidth = 8;
-  ctx.lineCap = "round";
-
   let using = false //默认没有作画状态
   let last
 
@@ -98,39 +145,8 @@ function touchAndMousePainting(canvas){
   function drawLine(x1, y1, x2, y2){
     ctx.beginPath();
     ctx.moveTo(x1, y1);
+    ctx.lineWidth = lineWidth
     ctx.lineTo(x2, y2);
     ctx.stroke();
-  }
-  black.onclick = function(){
-    ctx.fillStyle = "black";
-    ctx.strokeStyle = 'black';
-    black.classList.add('active')
-    red.classList.remove('active')
-    green.classList.remove('active')
-    blue.classList.remove('active')
-  }
-  red.onclick = function(){
-    ctx.fillStyle = "red";
-    ctx.strokeStyle = 'red';
-    red.classList.add('active')
-    black.classList.remove('active')
-    green.classList.remove('active')
-    blue.classList.remove('active')
-  }
-  green.onclick = function(){
-    ctx.fillStyle = "green";
-    ctx.strokeStyle = 'green';
-    green.classList.add('active')
-    black.classList.remove('active')
-    red.classList.remove('active')
-    blue.classList.remove('active')
-  }
-  blue.onclick = function(){
-    ctx.fillStyle = "blue";
-    ctx.strokeStyle = 'blue';
-    blue.classList.add('active')
-    black.classList.remove('active')
-    red.classList.remove('active')
-    green.classList.remove('active')
   }
 }

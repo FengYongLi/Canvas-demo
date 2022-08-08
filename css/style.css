@@ -43,3 +43,19 @@ body{overflow: hidden;}
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.95);
   transform: scale(1.2);
 }
+.size{
+  position: fixed;
+  right: 20px;
+  top: 80px;
+}
+.size > li{margin: 20px 0;}
+.size > .thin{
+  height: 0;
+  width: 20px;
+  border-top: 3px solid black;
+}
+.size > .thick{
+  height: 0;
+  width: 20px;
+  border-top: 6px solid black;
+}

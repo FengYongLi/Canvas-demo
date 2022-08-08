@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>画板</title>
     <link rel="stylesheet" href="css/style.css">
@@ -11,6 +11,17 @@
 
   <body>
     <canvas id="canvas" width="100" height="100"></canvas>
+    <div id="actions" class="actions">
+      <svg id="pen" class="icon active">
+        <use xlink:href="#icon-pen"></use>
+      </svg>
+      <svg id="eraser" class="icon">
+        <use xlink:href="#icon-eraser"></use>
+      </svg>
+    </div>
+
+
+    <script src="//at.alicdn.com/t/c/font_3575187_mt6uy8pe2b.js"></script>
     <script src="mian.js"></script>
   </body>
 

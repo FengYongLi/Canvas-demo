@@ -1,12 +1,25 @@
+// 阻止默认动作
 document.addEventListener('touchmove', function (e) {
   e.preventDefault()
 })
+
 const canvas = document.getElementById("canvas");
 
 autoSetCanvasSize(canvas)
+
 touchAndMousePainting(canvas)
 
-
+let eraserEnabled = false
+pen.onclick = function(){
+  eraserEnabled = false
+  pen.classList.add('active')
+  eraser.classList.remove('active')
+}
+eraser.onclick = function(){
+  eraserEnabled = true
+  eraser.classList.add('active')
+  pen.classList.remove('active')
+}
 
 // 自动设置 canvas 宽高
 function autoSetCanvasSize(canvas){
@@ -28,38 +41,57 @@ function touchAndMousePainting(canvas){
   ctx.lineWidth = 8;
   ctx.lineCap = "round";
 
-  let painting = false //默认没有作画状态
+  let using = false //默认没有作画状态
   let last
 
   const isTouchDevice = 'ontouchstart' in document.documentElement; //是否是触摸设备(true)
   if(isTouchDevice){
     canvas.ontouchstart = (e) => {
-      let x = e.touches[0].clientX //获取数组touches第一个clientX坐标（横坐标）
-      let y = e.touches[0].clientY //获取数组touches第一个clientY坐标（纵坐标）
-      last = [x, y] //记录下第一个坐标
+      let x = e.touches[0].clientX
+      let y = e.touches[0].clientY
+      using = true
+      if(eraserEnabled){
+        ctx.clearRect(e.touches[0].clientX, e.touches[0].clientY,8,8)
+      } else{
+        last = [x, y] //记录下第一个坐标
+      }
     }
     canvas.ontouchmove = (e) => { //如果触摸了，开始作画
-      let x = e.touches[0].clientX //获取数组touches第一个clientX坐标（横坐标）
-      let y = e.touches[0].clientY //获取数组touches第一个clientY坐标（纵坐标）
-      drawLine(last[0], last[1], x, y) // 画线
-      last = [x, y] //移动后实时更新坐标
+      let x = e.touches[0].clientX
+      let y = e.touches[0].clientY
+      if(!using){return}
+      if(eraserEnabled){
+        ctx.clearRect(e.touches[0].clientX - 4, e.touches[0].clientY,8,8)
+      } else {
+        drawLine(last[0], last[1], x, y) // 画线
+        last = [x, y] //移动后实时更新坐标
+      }
     }
-    //画圆
+    canvas.ontouchend = () => {
+      using = false
+    }
   }else{
     canvas.onmousedown = (e) => {
-      painting = true //鼠标点击开始作画状态
-      last = [e.clientX, e.clientY]
-    }
-
-    canvas.onmousemove = (e) => {//鼠标移动了开始作画
-      if (painting === true) {
-        drawLine(last[0], last[1], e.clientX, e.clientY)
+      using = true //鼠标点击开始使用画笔或橡皮差
+      if(eraserEnabled){
+        ctx.clearRect(e.clientX - 4, e.clientY - 4,8,8)
+      }else{
         last = [e.clientX, e.clientY]
       }
     }
 
+    canvas.onmousemove = (e) => {
+      if(!using){return}
+      if(eraserEnabled){
+          ctx.clearRect(e.clientX - 4, e.clientY -4,8,8)
+      }else{
+          drawLine(last[0], last[1], e.clientX, e.clientY)
+          last = [e.clientX, e.clientY]
+      }
+    }
+
     canvas.onmouseup = () => {
-      painting = false
+      using = false
     }
   }
   // 画圆

@@ -21,6 +21,8 @@ eraser.onclick = function(){
   pen.classList.remove('active')
 }
 
+
+
 // 自动设置 canvas 宽高
 function autoSetCanvasSize(canvas){
   setCanvasSize()
@@ -36,8 +38,6 @@ function autoSetCanvasSize(canvas){
 // 鼠标或触屏绘画
 function touchAndMousePainting(canvas){
   let ctx = canvas.getContext("2d");
-  ctx.fillStyle = "black";
-  ctx.strokeStyle = 'black';
   ctx.lineWidth = 8;
   ctx.lineCap = "round";
 
@@ -100,5 +100,37 @@ function touchAndMousePainting(canvas){
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
+  }
+  black.onclick = function(){
+    ctx.fillStyle = "black";
+    ctx.strokeStyle = 'black';
+    black.classList.add('active')
+    red.classList.remove('active')
+    green.classList.remove('active')
+    blue.classList.remove('active')
+  }
+  red.onclick = function(){
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = 'red';
+    red.classList.add('active')
+    black.classList.remove('active')
+    green.classList.remove('active')
+    blue.classList.remove('active')
+  }
+  green.onclick = function(){
+    ctx.fillStyle = "green";
+    ctx.strokeStyle = 'green';
+    green.classList.add('active')
+    black.classList.remove('active')
+    red.classList.remove('active')
+    blue.classList.remove('active')
+  }
+  blue.onclick = function(){
+    ctx.fillStyle = "blue";
+    ctx.strokeStyle = 'blue';
+    blue.classList.add('active')
+    black.classList.remove('active')
+    red.classList.remove('active')
+    green.classList.remove('active')
   }
 }
